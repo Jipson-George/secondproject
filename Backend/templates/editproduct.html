@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% extends 'adminhome.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title text-green">CATEGORY</h4>
+                    <p class="card-description">  </p>
+                    <form class="forms-sample" method="post" action="{% url 'updateproduct' pid=pdata.id %}" enctype="multipart/form-data">
+                      {% csrf_token %}
+       <div class="form-group">
+                        <label for="exampleFormControlSelect2">Category Select</label>
+<select class="form-control btn-outline-success  btn-dropdown-toggle" id="exampleFormControlSelect2" name="Select" >
+                        <option>{{pdata.pselect}}</option>
+                     {% for i in cat %}
+                        <option>{{i.cname}}</option>
+                         {% endfor %}
+                      </select>
+                         </div>
+                        <div class="form-group">
+                        <label for="exampleInputName2">Name</label>
+                        <input type="text" class="form-control" id="exampleInputName2" placeholder="name" name="Name" value="{{pdata.pname}}">
+                      </div>
+
+
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Description</label>
+                        <textarea class="form-control" id="exampleTextarea1" rows="4" name="Description">{{pdata.pdes}}</textarea>
+                      </div>
+                       <div class="form-group">
+                        <label for="exampleInputName">Price</label>
+                        <input type="text" class="form-control" id="exampleInputName0" placeholder="price" name="Price" value="{{pdata.pprice}}" >
+                      </div>
+                       <div class="form-group">
+
+                        <label for="exampleInputPassword4">File upload </label>
+                           <img src="{{pdata.pimage.url}}" width="100px" height="100px">
+                        <input type="file" class="form-control" id="exampleInputPassword4" name="Image" >
+
+                      </div>
+                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                      <button class="btn btn-secondary">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  {% if messages %}
+      {% for i in messages %}
+           {% if i.tags == 'warning' %}
+               <script>
+                    swal('{{i}}','','warning');
+               </script>
+           {% elif i.tags == 'error' %}
+               <script>
+                    swal('{{i}}','','error');
+               </script>
+           {% else %}
+               <script>
+                    swal('{{i}}','','success');
+               </script>
+           {% endif %}
+        {% endfor %}
+    {% endif %}
+
+</body>
+</html>
+{% endblock %}
